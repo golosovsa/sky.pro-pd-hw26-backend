@@ -19,7 +19,7 @@ jobs:
     needs: build_and_push
     steps:
       - name: clone code
-        uses: action/checkout@v2
+        uses: actions/checkout@v2
       - name: render deploy config
         run: |
           mkdir deploy
