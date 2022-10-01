@@ -3,4 +3,4 @@
 # Project status
 - [x] Initial
 - [x] CI
-- [ ] CD
+- [x] CD
