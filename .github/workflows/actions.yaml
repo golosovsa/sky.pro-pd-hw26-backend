@@ -40,6 +40,5 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           password: ${{ secrets.DEPLOY_PASSWORD }}
           script: |
-            whoami
             cd deploy_ci
-            echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S docker-compose up -d
+            echo '${{ secrets.DEPLOY_PASSWORD }}' | sudo -S docker-compose up -d
