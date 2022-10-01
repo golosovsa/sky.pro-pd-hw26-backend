@@ -41,5 +41,5 @@ jobs:
           password: ${{ secrets.DEPLOY_PASSWORD }}
           script: |
             cd deploy_ci
-            echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S -v
+            echo ${{ secrets.DEPLOY_PASSWORD }} | sudo -S su
             docker-compose up -d
