@@ -1,0 +1,61 @@
+version: "3.9"
+services:
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB }}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+
+  migration:
+    image: ${{ secrets.DOCKER_USER }}/skypro-pd-hw26:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    environment:
+      FLASK_APP: run.py
+      FLASK_ENV: production
+      FLASK_RUN_PORT: 3000
+      DATABASE_USER: ${{ secrets.POSTGRES_USER }}
+      DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DATABASE_HOST: postgres
+      DATABASE_NAME: ${{ secrets.POSTGRES_DB }}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        python create_tables.py
+        python load_fixtures.py
+        flask db upgrade
+
+  backend:
+    image: ${{ secrets.DOCKER_USER }}/skypro-pd-hw26:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    environment:
+      FLASK_APP: run.py
+      FLASK_ENV: production
+      FLASK_RUN_PORT: 3000
+      DATABASE_USER: ${{ secrets.POSTGRES_USER }}
+      DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DATABASE_HOST: postgres
+      DATABASE_NAME: ${{ secrets.POSTGRES_DB }}
+    ports:
+      - 5000:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migration:
+        condition: service_completed_successfully
+
+  frontend:
+    image: painassasin/node_cource_project:latest
+    ports:
+      - 80:80
