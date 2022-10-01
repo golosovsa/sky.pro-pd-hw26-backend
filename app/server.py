@@ -15,12 +15,13 @@ def base_service_error_handler(exception: BaseServiceError):
 
 
 def create_app(config_obj):
-    app = Flask(__name__, static_folder="../static", template_folder="../templates")
+    app = Flask(__name__)
     app.config.from_object(config_obj)
+    print(app.config["SQLALCHEMY_DATABASE_URI"])
 
     @app.route("/")
     def index():
-        return render_template("index.html"), 200
+        return "OK", 200
 
     CORS(app=app)
     db.init_app(app)

@@ -43,10 +43,8 @@ class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = f"postgresql://" \
                               f"{os.getenv('DATABASE_USER')}:" \
                               f"{os.getenv('DATABASE_PASSWORD')}@" \
-                              f"{os.getenv('DATABASE_HOST')}:" \
-                              f"{os.getenv('DATABASE_PORT')}/" \
+                              f"{os.getenv('DATABASE_HOST')}:5432/" \
                               f"{os.getenv('DATABASE_NAME')}"
-
 
 class ConfigFactory:
     flask_env = os.getenv('FLASK_ENV')
@@ -54,10 +52,13 @@ class ConfigFactory:
     @classmethod
     def get_config(cls) -> Type[BaseConfig]:
         if cls.flask_env == 'development':
+            print("Development config")
             return DevelopmentConfig
         elif cls.flask_env == 'production':
+            print("Production config")
             return ProductionConfig
         elif cls.flask_env == 'testing':
+            print("Testing config")
             return TestingConfig
         raise NotImplementedError
 
