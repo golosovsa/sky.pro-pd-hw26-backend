@@ -42,13 +42,14 @@ class DevelopmentConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = f"postgresql://" \
-                              f"{os.getenv('DATABASE_USER')}:" \
-                              f"{quote_plus(os.getenv('DATABASE_PASSWORD'))}@" \
-                              f"{os.getenv('DATABASE_HOST')}:5432/" \
-                              f"{os.getenv('DATABASE_NAME')}"
+                              f"{os.getenv('DATABASE_USER', default='DATABASE_USER')}:" \
+                              f"{quote_plus(os.getenv('DATABASE_PASSWORD', default='DATABASE_PASSWORD'))}@" \
+                              f"{os.getenv('DATABASE_HOST', default='DATABASE_HOST')}:5432/" \
+                              f"{os.getenv('DATABASE_NAME', default='DATABASE_NAME')}"
 
 class ConfigFactory:
     flask_env = "development"
+
     @classmethod
     def get_config(cls) -> Type[BaseConfig]:
         cls.flask_env = os.getenv('FLASK_ENV')
