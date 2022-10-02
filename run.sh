@@ -29,9 +29,9 @@ if [ $# -gt 0 ]; then
 
     if [[ $1 =~ "m" ]]; then
     echo "Init db migrates"
-    #rm -fr ./migrations
-    #flask db init
-    flask db migrate -m "load fixtures"
+    rm -fr ./migrations
+    flask db init
+    flask db migrate -m "Create tables"
   fi
 
   if [[ $1 =~ "h" ]]; then
