@@ -23,8 +23,8 @@ jobs:
       - name: render deploy config
         run: |
           export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-          export POSTGRES_PASSWORD=${{ secrets.$POSTGRES_PASSWORD }}
-          export POSTGRES_DB=${{ secrets.$POSTGRES_DB }}
+          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           mkdir deploy
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
       - name: copy files to server
