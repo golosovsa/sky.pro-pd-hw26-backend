@@ -33,10 +33,8 @@ services:
       - -c
       - |
         sleep 10
-        python drop_tables.py
-        python create_tables.py
-        python load_fixtures.py
         flask db upgrade
+        python load_fixtures.py
 
   backend:
     image: golosovsa/skypro-pd-hw26:$GITHUB_REF_NAME-$GITHUB_RUN_ID
