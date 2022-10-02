@@ -34,7 +34,6 @@ services:
       - |
         sleep 10
         flask db upgrade
-        python load_fixtures.py
 
   backend:
     image: golosovsa/skypro-pd-hw26:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -55,6 +54,6 @@ services:
         condition: service_completed_successfully
 
   frontend:
-    image: painassasin/node_cource_project:latest
+    image: golosovsa/skypro-pd-hw26-frontend:latest
     ports:
       - 80:80
