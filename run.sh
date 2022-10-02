@@ -2,7 +2,7 @@
 
 source venv/bin/activate
 export FLASK_APP=run.py
-export FLASK_ENV='development'
+export FLASK_ENV=development
 export FLASK_RUN_PORT=25000
 
 if [ $# -gt 0 ]; then

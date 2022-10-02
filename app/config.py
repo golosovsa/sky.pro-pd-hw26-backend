@@ -48,10 +48,10 @@ class ProductionConfig(BaseConfig):
                               f"{os.getenv('DATABASE_NAME')}"
 
 class ConfigFactory:
-    flask_env = os.getenv('FLASK_ENV')
-
+    flask_env = "development"
     @classmethod
     def get_config(cls) -> Type[BaseConfig]:
+        cls.flask_env = os.getenv('FLASK_ENV')
         if cls.flask_env == 'development':
             print("Development config")
             return DevelopmentConfig
