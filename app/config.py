@@ -1,5 +1,6 @@
 import base64
 import os
+from urllib.parse import quote_plus
 from pathlib import Path
 from typing import Type
 
@@ -42,7 +43,7 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = f"postgresql://" \
                               f"{os.getenv('DATABASE_USER')}:" \
-                              f"{os.getenv('DATABASE_PASSWORD')}@" \
+                              f"{quote_plus(os.getenv('DATABASE_PASSWORD'))}@" \
                               f"{os.getenv('DATABASE_HOST')}:5432/" \
                               f"{os.getenv('DATABASE_NAME')}"
 
