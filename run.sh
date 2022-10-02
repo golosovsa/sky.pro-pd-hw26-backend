@@ -32,6 +32,7 @@ if [ $# -gt 0 ]; then
     rm -fr ./migrations
     flask db init
     flask db migrate -m "Initial migration"
+    flask db upgrade
   fi
 
   if [[ $1 =~ "h" ]]; then
