@@ -34,6 +34,7 @@ services:
       - |
         sleep 10
         python drop_tables.py
+        python create_tables.py
         flask db upgrade
         python load_fixtures.py
 

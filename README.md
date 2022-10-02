@@ -4,3 +4,4 @@
 - [x] Initial
 - [x] CI
 - [x] CD
+- [x] Added a github action to checkout flake8.
